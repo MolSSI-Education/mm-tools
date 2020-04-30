@@ -29,8 +29,9 @@ keypoints:
 Computational chemistry is a field which uses calculations performed on computers to predict real world properties of molecules. Because we can't have "real" molecules in a computer, we have to approximate their behavior using mathematical models in simulations. Within the field of computational chemistry, the types of simulation are grouped into two broad categories based on the type of physics the models are based on. Quantum chemistry simulations are based on quantum mechanics (Schrodinger's equation if you have taken quantum chemistry). The other broad category of computational chemistry is based on **molecular mechanics**, or classical(Newtonian) physics. This is essentially the same kind of physics you learn in introductory physics course where you might predict the path of a ball thrown through the air. 
 
 Quantum mechanics calculations are more accurate and detailed than molecular mechanics calculations. However, quantum calculations take longer (are more "expensive") and are limited in what can be studied. Molecular mechanics methods are most often used to study the time dependent properties of molecules. The figure below illustrates this trade off between accuracy and cost. The lower left corner shows simulations which use classical physics. They are less expensive, but also less detailed. The upper right represents quantum mechanics methods - they are very accurate, but also very expensive. This workshop focuses on molecular mechanics simulations.
-
-<img src="https://github.com/MolSSI-Education/mm-tools/raw/gh-pages/fig/simulation-scale.png" height=500>
+<div>
+  <img src="http://education.molssi.org/mm-tools/fig/simulation-scale.png" height=500>
+</div>
 
 ## The "force field"
 
@@ -60,7 +61,7 @@ We are going to perform simulations of molecules using the software [OpenMM](htt
   <script>
       document.addEventListener("DOMContentLoaded", function () {
         var stage = new NGL.Stage("ethane-viewport", {backgroundColor: "white"} );
-        stage.loadFile("https://github.com/MolSSI-Education/mm-tools/raw/gh-pages/data/ethane.pdb", {defaultRepresentation: true});
+        stage.loadFile("http://education.molssi.org/mm-tools/data/ethane.pdb", {defaultRepresentation: true});
       });
     </script>
   <div id="ethane-viewport" style="width:400px; height:300px;"></div>
@@ -202,7 +203,7 @@ The last line tells OpenMM we are done telling it about the ForceField. We have 
 >  <script>
 >      document.addEventListener("DOMContentLoaded", function () {
 >        var stage = new NGL.Stage("butane-viewport", {backgroundColor: '#fcf6ea'} );
->        stage.loadFile("https://github.com/MolSSI-Education/mm-tools/raw/gh-pages/data/butane.pdb", {defaultRepresentation: true});
+>        stage.loadFile("http://education.molssi.org/mm-tools/data/butane.pdb", {defaultRepresentation: true});
 >      });
 >    </script>
 >  <div id="butane-viewport" style="width:400px; height:300px;"></div>
