@@ -30,7 +30,7 @@ Computational chemistry is a field which uses calculations performed on computer
 
 Quantum mechanics calculations are more accurate and detailed than molecular mechanics calculations. However, quantum calculations take longer (are more "expensive") and are limited in what can be studied. Molecular mechanics methods are most often used to study the time dependent properties of molecules. The figure below illustrates this trade off between accuracy and cost. The lower left corner shows simulations which use classical physics. They are less expensive, but also less detailed. The upper right represents quantum mechanics methods - they are very accurate, but also very expensive. This workshop focuses on molecular mechanics simulations.
 <div>
-  <img src="http://education.molssi.org/mm-tools/fig/simulation-scale.png" height=500>
+  <img src="http://education.molssi.org/mm-tools/fig/simulation-scale.png" height="500">
 </div>
 
 ## The "force field"
