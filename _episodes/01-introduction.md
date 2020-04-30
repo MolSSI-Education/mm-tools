@@ -1,18 +1,28 @@
 ---
 title: "Introduction"
-teaching: 0
-exercises: 0
+teaching: 40
+exercises: 20
 questions:
-- "Key question (FIXME)"
+- "What does molecular mechanics mean?"
+- "What is a force field?"
+- "How do I tell software what my force field is?"
 objectives:
-- "First learning objective. (FIXME)"
+- "What does 'molecular mechanics' mean?"
+- "What is a force field?"
+- "How do I get my force field into a format OpenMM understands?"
 keypoints:
-- "First key point. Brief Answer to questions. (FIXME)"
+- "Molecular mechanics simulations use classical physics to calculate properties of molecules and materials"
+- "A force field is an equation describing the potential energy of a system."
+- "Force fields have terms for bonds, angles, dihedrals (bonded terms), and Van der Waals and electrostatic (nonbonded) interactions."
+- "We are going to use a software called OpenMM to simulate our molecules."
+- "OpenMM understands force fields in a format called an XML file."
 ---
 
 <script type="text/javascript" async
   src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
 </script>
+
+ <script src="https://unpkg.com/ngl@0.10.4/dist/ngl.js"></script>
 
 ## What does "molecular mechanics" mean?
 
@@ -24,7 +34,7 @@ Quantum mechanics calculations are more accurate and detailed than molecular mec
 
 ## The "force field"
 
-As stated above, all computational simulations depend on a mathematical model to describe the molecule. The full expression of this model is often called a **force field**  or potential energy function in molecular mechanics simulations. This force field describes the energy associated with molecular movements such as bond stretching, angle bending, or dihedral angle rotation. If you are a chemistry student, you have likely discussed many of these molecular motions in your classes (who can forget talking about the cis-trans isomerism of butane in organic chemistry class?). The force field describes the energies associated with these movements mathematically. The potential energy is commonly represented by the letter $$U$$, and the total potential energy or "force field" is the sum of terms related to bond stretching, angle bending, torsional rotation (that cis-trans isomerism), electrostatic interaction, and nonbonded Van der Waals interactions.
+As stated above, all computational simulations depend on a mathematical model to describe the molecule. The full expression of this model is often called a **force field**  and is a function which describes the potential energy of a system. This force field describes the energy associated with molecular movements such as bond stretching, angle bending, or dihedral angle rotation. If you are a chemistry student, you have likely discussed many of these molecular motions in your classes (who can forget talking about the cis-trans isomerism of butane in organic chemistry class?). The force field describes the energies associated with these movements mathematically. The potential energy is commonly represented by the letter $$U$$, and the total potential energy or "force field" is the sum of terms related to bond stretching, angle bending, torsional rotation (that cis-trans isomerism), electrostatic interaction, and nonbonded Van der Waals interactions.
 
 $$ U = U_{bond} + U_{angle} + U_{torsion} + U_{elec} + U_{vdw} $$
 
@@ -42,9 +52,22 @@ $$ U_{elec} = k_{e}\frac{q_{i}q_{j}}{r_{ij}} $$
 
 $$ U_{vdw} = 4\epsilon_{ij}[(\frac{\alpha_{ij}}{r_{ij}})^{12} - (\frac{\alpha_{ij}}{r_{ij}})^{6}] $$
 
-## Getting ready to simulate molecules
+## Creating a forcefield file
 
-We are going to perform simulations of molecules using the software [OpenMM](http://openmm.org/). As discussed, we must first set our model, or force field. Consider the following parameters which we can use in the equations above to describe ethane.
+We are going to perform simulations of molecules using the software [OpenMM](http://openmm.org/). As discussed, we must first set our model, or force field. We will consider an ethane molecule:
+
+<center>
+  <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var stage = new NGL.Stage("ethane-viewport", {backgroundColor: "white"} );
+        stage.loadFile("/data/ethane.pdb", {defaultRepresentation: true});
+      });
+    </script>
+  <div id="ethane-viewport" style="width:400px; height:300px;"></div>
+</center>
+
+
+Consider the following parameters which we can use in the equations above to describe ethane.
 
 | Interaction       | Parameters                                                                            |
 |-------------------|---------------------------------------------------------------------------------------|
@@ -174,7 +197,16 @@ Finally, we tell OpenMM the parameters for our force field equation.
 The last line tells OpenMM we are done telling it about the ForceField. We have prepared our file for OpenMM, and are now ready to simulate our molecule.
 
 > ## Exercise
-> Prepare an XML file for the butane molecule. The butane molecule is a little more complicated. Consider the following:
+> Prepare an XML file for the butane molecule. The butane molecule is a little more complicated. Look at the structure and consider the questions below:
+> <center>
+>  <script>
+>      document.addEventListener("DOMContentLoaded", function () {
+>        var stage = new NGL.Stage("butane-viewport", {backgroundColor: '#fcf6ea'} );
+>        stage.loadFile("/data/butane.pdb", {defaultRepresentation: true});
+>      });
+>    </script>
+>  <div id="butane-viewport" style="width:400px; height:300px;"></div>
+> </center>
 > 
 > How many atom types are there in butane? Are there more than ethane? (think about whether carbons and hydrogens are equivalent)
 > Are there more bond types? Ethane had C-H bonds and C-C bonds. Are the bonds in butane different?
