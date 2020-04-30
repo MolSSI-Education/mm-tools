@@ -185,7 +185,7 @@ The last line tells OpenMM we are done telling it about the ForceField. We have 
 > |-------------------|---------------------------------------------------------------------------------------|
 > |C-C-C angle        | $$\theta_{eq} = 1.946$$ $$rad$$, $$k_{\theta} = 543.0 kJ/mol \cdot rad^2$$            |
 > |H-C-C-C torsion    | $$\gamma_{3} = 0$$ $$rad$$, $$U_{3} = 0.3347 kJ/mol$$                                 |
-> |C-C-C-C torsion    | $$\gamma_{1} = 0$$ $$rad$$, $$U_{1} = 0.4602 kJ/mol$$, $$\gamma_{2} = 3.146$$ $$rad$$, $$U_{2} = 1.2134 kJ/mol$$, $$\gamma_{3} = 0$$ $$rad$$, $$U_{3} = 0.5439 kJ/mol    |
+> |C-C-C-C torsion    | $$\gamma_{1} = 0$$ $$rad$$, $$U_{1} = 0.4602 kJ/mol$$, $$\gamma_{2} = 3.146$$ $$rad$$, $$U_{2} = 1.2134 kJ/mol$$, $$\gamma_{3} = 0$$ $$rad$$, $$U_{3} = 0.5439 kJ/mol$$    |
 > |"outer" C atom (nonbonded) | $$q_{C} = -0.0932e$$, $$\alpha_{C}$$ and $$\epsilon_{C}$$ same as ethane|
 > |"inner" C atom (nonbonded) | $$q_{C} = -0.0814e$$, $$\alpha_{C}$$ and $$\epsilon_{C}$$ same as ethane|
 > |"outer" H atom (nonbonded) | $$q_{H} = 0.0324e$$, $$\alpha_{H}$$ and $$\epsilon_{H}$$ same as ethane|
