@@ -44,6 +44,7 @@ Usually a simulation protocol follow this general procedure:
 1. **Minimization** - A brief energy minimization to eliminate "bad" interatomic contacts (i.e., ones that would cause high forces) that would result in a numerically unstable simulation.
 1. **Equilibration** - A brief MD simulation for the purpose of bringing the system temperature or temperature and volume to the desired equilibrium values.
 1. **Production** - A long MD simulation for the purpose of collecting data.
+1. **Analysis** - After you have collected your data from the production run, you must analyze the trajectory to draw conclusions.
 
 ## Running your first simulations
 
