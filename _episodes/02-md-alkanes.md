@@ -139,7 +139,7 @@ from sys import stdout
 print('Equilibrating...')
 
 simulation.reporters.append(app.StateDataReporter(stdout, 100, step=True, 
-    potentialEnergy=True, temperature=True, separator='\t'))
+    potentialEnergy=True, temperature=True, separator=','))
 simulation.context.setVelocitiesToTemperature(150.0*unit.kelvin)
 simulation.step(2500)
 ~~~
@@ -168,7 +168,7 @@ simulation.reporters.clear()
 # output basic simulation information below every 250000 steps - (which is equal to 2 fs(250,000) = 500,000 fs = 500 ps)
 simulation.reporters.append(app.StateDataReporter(stdout, 250000, 
     step=True, time=True, potentialEnergy=True, temperature=True, 
-    speed=True, separator='\t'))
+    speed=True, separator=','))
 
 # write out a trajectory (i.e., coordinates vs. time) to a DCD
 # file every 100 steps - 0.2 ps
@@ -190,12 +190,94 @@ print('Time required for simulation:', tfinal-tinit, 'seconds')
 > The "speed" is reported in "ns/day" or "nanoseconds/day". This is a commonly used unit to report how quickly simulations run. It tells you how much simulation time in nanoseconds would pass for 24 hours of computation time. For example, if a simulation is running at 2 ns/day, enough timesteps would be calculated in one day to make 2 nanoseconds of simulation time. If we were using our 2 fs timestep, this would mean that the computer calculated 1,000,000 timesteps over 24 hours.
 {: .callout}
 
+> ## Your Turn - Simulation of Butane
+>
+> Make a copy of the code you wrote to run your ethane simulation. Modify this code to:
+> 1. Read in the files `butane.gaff2.xml` and `butane.pdb`
+> 1. Carry out a 10 ps MD simulation to bring the butane molecule to an equilibrium temperature of 298 K in which output is printed every 0.5 ps (Leave the minimization portion beforehand unchanged.)
+> 1. Carry out a 40 ns MD simulation at 298 K in which output is printed every 1 ns and structures are (still) saved every 0.2 ps into a file called `butane_sim.dcd`.
+> 
+>> ## Solution
+>> ### Simulation Set up
+>> ~~~
+>> # read in a starting structure for butane and the
+>> # corresponding force field file
+>> pdb = app.PDBFile('butane.pdb')
+>> forcefield = app.ForceField('butane.gaff2.xml')
+>>
+>> # setup system by taking topology from pdb file;
+>> # run gas phase simulation with 2 fs time step (using SHAKE)
+>> # at 298.15 K using a Langevin thermostat (integrator) with
+>> # coupling constant of 5.0 ps^-1
+>> system = forcefield.createSystem(pdb.topology, nonbondedMethod=app.NoCutoff, 
+>>                                  constraints=app.HBonds)
+>> integrator = mm.LangevinIntegrator(298.15*unit.kelvin, 5.0/unit.picoseconds, 
+>>                                    2.0*unit.femtoseconds)
+>> integrator.setConstraintTolerance(1e-5)
+>> 
+>> platform = mm.Platform.getPlatformByName('Reference')
+>> simulation = app.Simulation(pdb.topology, system, integrator, platform)
+>> simulation.context.setPositions(pdb.positions)
+>> ~~~
+>> {: .language-python}
+>>
+>> ### Energy minimization
+>> This section should be unchanged from your ethane molecule.
+>> ~~~
+>> print('Minimizing...')
+>> 
+>> st = simulation.context.getState(getPositions=True,getEnergy=True)
+>> print("Potential energy before minimization is %s" % st.getPotentialEnergy())
+>> 
+>> simulation.minimizeEnergy(maxIterations=100)
+>> 
+>> st = simulation.context.getState(getPositions=True,getEnergy=True)
+>> print("Potential energy after minimization is %s" % st.getPotentialEnergy())
+>> ~~~
+>> {: .language-python}
+>>
+>> ### Equilibration
+>> For this section, we double the number of steps in our equilibration since we want a time of 10 ps (5,000 * 2 fs = 10 picoseconds)
+>>
+>> ~~~
+>> print('Equilibrating...')
+>> 
+>> simulation.reporters.append(app.StateDataReporter(stdout, 250, step=True, potentialEnergy=True, temperature=True, separator=','))
+>> simulation.context.setVelocitiesToTemperature(150.0*unit.kelvin)
+>> simulation.step(5000)
+>> ~~~
+>> {: .language-python}
+>>
+>> #### Production
+>> 
+>> ~~~
+>> print('Running Production...')
+>> 
+>> tinit=time.time()
+>> simulation.reporters.clear()
+>> # output basic simulation information below every 500000 steps/1 ns
+>> simulation.reporters.append(app.StateDataReporter(stdout, 500000, 
+>>     step=True, time=True, potentialEnergy=True, temperature=True, 
+>>     speed=True, separator=','))
+>> # write out a trajectory (i.e., coordinates vs. time) to a DCD
+>> # file every 100 steps/0.2 ps
+>> simulation.reporters.append(app.DCDReporter('butane_sim.dcd', 100))
+>> 
+>> # run the simulation for 2.0x10^7 steps/40 ns
+>> simulation.step(20000000)
+>> tfinal=time.time()
+>> print('Done!')
+>> print('Time required for simulation:', tfinal-tinit, 'seconds')
+>> ~~~
+>> {: .language-python}
+> {: .solution}
+{: .challenge}
 
 ## Analysis
 
 Now that we've performed our computer experiment, it is time to analyze the data we have collected. The main type of data you have collected through this simulation is information on atom positions, or the system trajectory.
 
-As part of our production simulation, we set up a reporter to record atomic positions
+As part of our production simulation, we set up a reporter to record atomic positions. The code below shows that code from your previous script, you do not need to execute it.
 
 ~~~
 simulation.reporters.append(app.DCDReporter('ethane_sim.dcd', 100))
@@ -225,7 +307,7 @@ traj = md.load('ethane_sim.dcd', top='ethane.pdb')
 ~~~
 {: .language-python}
 
-The command above reads all of the atomic positions from `ethane_sim.dcd` and keeps track of atom connectivity (topology) which was given in the PDB file. Next, visualize the trajectory using nglview
+The command above reads all of the atomic positions from `ethane_sim.dcd` and keeps track of atom connectivity (topology) which was given in the PDB file. Next, visualize the trajectory using nglview. Nglview has a special function `show_mdtraj` that we can use with our trajectory because it was in a specific format from the MDTraj library.
 
 ~~~
 import nglview as ngl
@@ -245,22 +327,326 @@ atoms
 ~~~
 {: .language-python}
 
-### Analyzing the H-C-C-H torsion
+### Analyzing the C-C bond length
+
+Let's look at what C-C bond lengths our ethane molecule had during the simulation. Before we can measure the bond lengths, we have to decide which atoms from our molecule define the bond angle. Below is the output you should have seen above with the `atoms` command (though yours will be styled differently in the Jupyter notebook):
+
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>serial</th>
+      <th>name</th>
+      <th>element</th>
+      <th>resSeq</th>
+      <th>resName</th>
+      <th>chainID</th>
+      <th>segmentID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>C1</td>
+      <td>C</td>
+      <td>1</td>
+      <td>ETH</td>
+      <td>0</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>H11</td>
+      <td>H</td>
+      <td>1</td>
+      <td>ETH</td>
+      <td>0</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>H12</td>
+      <td>H</td>
+      <td>1</td>
+      <td>ETH</td>
+      <td>0</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>H13</td>
+      <td>H</td>
+      <td>1</td>
+      <td>ETH</td>
+      <td>0</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>C2</td>
+      <td>C</td>
+      <td>1</td>
+      <td>ETH</td>
+      <td>0</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>6</td>
+      <td>H21</td>
+      <td>H</td>
+      <td>1</td>
+      <td>ETH</td>
+      <td>0</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>7</td>
+      <td>H22</td>
+      <td>H</td>
+      <td>1</td>
+      <td>ETH</td>
+      <td>0</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>8</td>
+      <td>H23</td>
+      <td>H</td>
+      <td>1</td>
+      <td>ETH</td>
+      <td>0</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+We have to pick the atom indices for the C-C bond. An atom's index is the left-most value in the table above. For our torsion, we'll measure `C1-C2` the indices for these are `0` and  `4`. We use the function `compute_distances` in the MDTraj library to measure the distance between these atoms. 
+
+~~~
+bond_indices = [0, 4] # atoms to define the bond length
+bond_length = md.compute_distances(traj, [bond_indices])
+~~~
+{: .language-python}
+
+We now have the measurement for this torsion angle in radians for each recorded timestep of the trajectory saved in the array `bond_length`. One way we can examine this data is by plotting it as a histogram using the Python library `matplotlib`.
 
 ~~~
 import matplotlib.pyplot as plt
 
-phi_indices = [1, 0, 4, 5] # atoms to define the torsion angle
-phi = md.compute_dihedrals(traj, [phi_indices])
-
-phicounts, binedges, otherstuff = plt.hist(phi, bins=120) # create a histogram with 90 bins
-plt.title('H-C-C-H torsion angle')
-plt.xlabel(r'$\phi$ (rad)')
+bondcounts, binedges, otherstuff = plt.hist(bond_length, bins=120)
+plt.title('C-C bond length histogram')
+plt.xlabel('Bond length (nm)')
 plt.ylabel('Counts')
 plt.show()
 ~~~
 {: .language-python}
 
+> ## Exercise - Analyzing the H-C-C-H torsion
+>
+> A torsion is made up of four atoms which are bonded to each other. Analyze the torsion angle associated with the atoms `H11-C1-C2-H21` for your trajectory. Instead of using the function `compute_distance`, use `compute_dihedrals`. Create a histogram plot of the torsion angles.
+>
+>> ## Solution
+>>
+>> First, we need to pick the atom indices of our torsion angle and use the `compute_dihedrals` function to calculate the dihedrals.
+>> ~~~
+>> phi_indices = [1, 0, 4, 5] # atoms to define the torsion angle
+>> phi = md.compute_dihedrals(traj, [phi_indices])
+>>
+>> print(phi)
+>> ~~~
+>> {: .language-python}
+>> 
+>> We now have the measurement for this torsion angle in radians for each recorded timestep of the trajectory. 
+>>
+>> Next, we can examine this data by plotting it as a histogram using the Python library `matplotlib`.
+>> 
+>> ~~~
+>> import matplotlib.pyplot as plt
+>> 
+>> phicounts, binedges, otherstuff = plt.hist(phi, bins=90) # create a histogram with 90 bins
+>> plt.title('H-C-C-H torsion angle')
+>> plt.xlabel(r'$\phi$ (rad)')
+>> plt.ylabel('Counts')
+>> plt.show()
+>> ~~~
+>> {: .language-python}
+> {: .solution}
+{: .challenge}
+
+### Potential of Mean Force Calculation
+
+So far in our analysis, we have looked at the distribution of bond lengths and torsion angles for ethane. However, we can also use our simulations to calculate thermodynamics properties of our system. For example, we can use our calculated distributions along with Boltzmann's constant to calculate the potential of mean force (pmf), or energy change associated with changes in the bond length or torsion angle.
+
+The potential of mean force is defined by the expression
+
+$$ W(x) = -k_{B}T*ln[p(x)] + C $$
+
+where $$p(x)$$ is the probability, or the histogram we calculated previously.
+
+For our torsion angle, we can calculate and plot the PMF:
+
+~~~
+kB = 8.31446/1000 # Boltzmann constant in kJ/mol
+Temp = 298.15 # simulation temperature
+phicounts[phicounts==0] = 0.1 # get rid of any bins with 0 counts/infinite energy
+pmf = -kB*Temp*np.log(phicounts) # W(x) = -kT*ln[p(x)] = -kT*ln[n(x)] + C
+pmf = pmf - np.min(pmf) # subtract off minimum value so that energies start from 0
+
+bincenters = (binedges[1:] + binedges[:-1])/2 # compute centers of histogram bins
+
+plt.plot(bincenters, pmf)
+plt.title('H-C-C-H torsion pmf')
+plt.xlabel(r'$\phi$ (rad)')
+plt.ylabel('Relative free energy (kJ/mol)')
+plt.show()
+~~~
+{: .language-python}
+
+In the code above, we used the line `pmf = pmf - np.min(pmf)` to subtract the minimum system energy (or $$C$$ from the equation above), giving us the relative free energy.
+
+When we examine the plot, we can see that the PMF is not smooth near the free energy maxima. This is due to finite sampling in our relatively short simulation. This makes sense because the configurations of the molecule with the higher energy would not occur as many times during the simulation. To make this smoother, we could run a longer simulation or use a smoothing function on our data.
+
+#### C-C PMF
+
+Similarly, we can make a plot for the PMF of the C-C bond:
+
+~~~
+bondcounts[bondcounts==0] = 0.1
+pmf = -kB*Temp*np.log(bondcounts)
+pmf = pmf - np.min(pmf)
+
+bincenters = (binedges[1:] + binedges[:-1])/2
+
+pmf_smoothed = sm.nonparametric.lowess(pmf, bincenters, frac=0.05)
+pmf_s = pmf_smoothed[:,1] - np.min(pmf_smoothed[:,1])
+
+plt.plot(bincenters, pmf_s)
+plt.xlabel('Bond length (nm)')
+plt.ylabel('Relative free energy (kJ/mol)')
+plt.title('C-C bond length pmf')
+plt.show()
+~~~
+{: .language-python}
+
+Again, we see that our higher energy bond lengths are less smooth. This is because these bond lengths did not occur very much in our simulation (because of the high energy), so our statistics are poor. If we wanted to exclude these areas, we could subset the part of our data which we plot:
+
+~~~
+plt.plot(bincenters[pmf_s < 15], pmf_s[pmf_s < 15])
+plt.xlabel('Bond length (nm)')
+plt.ylabel('Relative free energy (kJ/mol)')
+plt.title('C-C bond length pmf')
+plt.show()
+~~~
+{: .language-python}
+
+
+> ## Your Turn - Analysis of Butane Trajectory
+> Create a copy of your ethane analysis code and modify your code to analyze your butane trajectory.
+> 1. Read in the files `butane.pdb` and `butane_sim.dcd` and visualize using NGLview.
+> 1. Analyze the C-C-C-C torsion angle and compute the PMF.
+> 1. Analyze the C-C-C bond angle (use either C1-C2-C3 or C2-C3-C4) and compute the PMF.
+> 1. Make only a histogram of one of the C-H bond lengths. Pick any C-H pair. What do you notice about the distribution of this bond length?
+>
+>> ## Solution
+>> ### Read in the MD Trajectory 
+>> ~~~
+>> traj = md.load('butane_sim.dcd', top='butane.pdb')
+>> atoms, bonds = traj.topology.to_dataframe()
+>> atoms
+>> ~~~
+>> {: .language-python}
+>>
+>> ### Visualize
+>> ~~~
+>> visualize = ngl.show_mdtraj(traj)
+>> visualize
+>> ~~~
+>> {: .language-python}
+>> ### Analyzing the C-C-C-C torsion
+>> ~~~
+>> phi_indices = [0, 4, 7, 10] # atoms to define the torsion angle
+>> phi = md.compute_dihedrals(traj, [phi_indices])
+>> 
+>> phicounts, binedges, otherstuff = plt.hist(phi, bins=90) # create a histogram with 90 bins
+>> plt.title('C-C-C-C torsion angle')
+>> plt.xlabel(r'$\phi$ (rad)')
+>> plt.ylabel('Counts')
+>> plt.show()
+>> 
+>> print(np.sum(phicounts))
+>> ~~~
+>> {: .language-python}
+>> #### C-C-C-C torsion PMF
+>> ~~~
+>> B = 8.31446/1000 # Boltzmann constant in kJ/mol
+>> Temp = 298.15 # simulation temperature in K
+>> phicounts[phicounts==0] = 0.1 # get rid of any bins with 0 counts/infinite energy
+>> pmf = -kB*Temp*np.log(phicounts) # W(x) = -kT*ln[p(x)] = -kT*ln[n(x)] + C
+>> pmf = pmf - np.min(pmf) # subtract off minimum value so that energies start from 0
+>> 
+>> bincenters = (binedges[1:] + binedges[:-1])/2 # compute centers of histogram bins
+>> 
+>> plt.plot(bincenters, pmf)
+>> plt.title('C-C-C-C torsion pmf')
+>> plt.xlabel(r'$\phi$ (rad)')
+>> plt.ylabel('Relative free energy (kJ/mol)')
+>> plt.show()
+>> ~~~
+>> {: .language-python}
+>> 
+>> ### Analyzing the C-C-C angle
+>> ~~~
+>> angle_indices = [0, 4, 7] # or could do [4, 7, 10]
+>> bondangle = md.compute_angles(traj, [angle_indices])
+>> 
+>> anglecounts, binedges, otherstuff = plt.hist(bondangle, bins=100)
+>> plt.title('C-C-C bond angle')
+>> plt.xlabel('Bond angle (rad)')
+>> plt.ylabel('Counts')
+>> plt.show()
+>> ~~~
+>> {: .language-python}
+>> #### C-C-C angle PMF
+>> ~~~
+>> anglecounts[anglecounts==0] = 0.1
+>> pmf = -kB*Temp*np.log(anglecounts)
+>> pmf = pmf - np.min(pmf)
+>> 
+>> bincenters = (binedges[1:] + binedges[:-1])/2
+>> 
+>> 
+>> plt.plot(bincenters, pmf)
+>> plt.xlabel('Bond angle (rad)')
+>> plt.ylabel('Relative free energy (kJ/mol)')
+>> plt.show()
+>> ~~~
+>> {: .language-python} 
+>> ### Analyzing a C-H bond
+>> ~~~
+>> bond_indices = [0, 1] # many possibilities!
+>> bondlength = md.compute_distances(traj, [bond_indices])
+>> 
+>> lengthcounts, binedges, otherstuff = plt.hist(bondlength, bins=100)
+>> plt.title('C-H bond length')
+>> plt.xlabel('Bond length (nm)')
+>> plt.ylabel('Counts')
+>> plt.show()
+>> ~~~
+>> {: .language-python}
+>> 
+>> The C-H bond length does not behave at all like something subject to a harmonic potential.  So what's going on?  Remember that in this simulation we have "frozen" all of the covalent bonds involving H atoms so that we can use a 2 fs time step.  Therefore only the non-H atoms undergo true dynamics; the positions of the H atoms are calculated after each time step using an interative algorithm (SHAKE).  For more information, check out: https://en.wikipedia.org/wiki/Constraint_(computational_chemistry)#The_SHAKE_algorithm
+> {: .solution}
+{: .challenge}
 
 {% include links.md %}
 
