@@ -318,13 +318,17 @@ Now you want to share your modified code by pushing it to your fork on GitHub.
 
 The commands are:
 ~~~
-git commit -m “Type any commit message you want”
-git push origin master
+$ git commit -m “Type any commit message you want”
+$ git push origin master
 ~~~
+{: .language-bash}
+
 Here, ​origin ​stands for the remote repository, i.e. your repository fork on GitHub. You can request to display the remote repository names and their URLs using the command:
 ~~~
-git remote -v
+$ git remote -v
 ~~~
+{: .language-bash}
+
 Your changes are now uploaded to your repository fork on GitHub, but they are not incorporated into the main code on the MolSSI GitHub.
 
 ## Create a pull request on GitHub for your feature to be added to the original repository.
