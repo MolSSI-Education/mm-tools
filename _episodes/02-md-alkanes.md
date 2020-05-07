@@ -1,13 +1,18 @@
 ---
 title: "MD Simulation of Alkanes"
-teaching: 0
-exercises: 0
+teaching: 60
+exercises: 60
 questions:
-- "Key question (FIXME)"
+- "How do I run a simulation?"
+- "How do I analyze a simulation?"
 objectives:
-- "First learning objective. (FIXME)"
+- "Understand the steps for running a simulation."
+- "Be able to perform analysis on  properties such as bond length, angles, and torsions."
+- "Understand a PMF calculation."
 keypoints:
-- "First key point. Brief Answer to questions. (FIXME)"
+- "Typical MD simulations consist of simulation initialization, minimization, equilibration, and production."
+- "The production simulation gives the data which is analyzed."
+- "Results from simulation can be used to calculate the potential of mean force (PMF)."
 ---
 
 <script type="text/javascript" async
