@@ -197,8 +197,10 @@ Finally, we tell OpenMM the parameters for our force field equation.
 
 The last line tells OpenMM we are done telling it about the ForceField. We have prepared our file for OpenMM, and are now ready to simulate our molecule.
 
-> ## Exercise
-> Prepare an XML file for the butane molecule. The butane molecule is a little more complicated. Look at the structure and consider the questions below:
+> ## Your Turn - Butane Forcefield File
+> Prepare an XML file for the butane molecule. The butane molecule is a little more complicated. Save your xml file as `butane.gaff2.xml` when you are finished.
+> 
+>  Look at the structure and consider the questions below:
 > <center>
 >  <script>
 >      document.addEventListener("DOMContentLoaded", function () {
