@@ -10,7 +10,7 @@ This is a lesson template for the [Molecular Sciences Software Institute]({{ sit
 
 > ## Prerequisites
 >
-> Students should be familiar with opening the Terminal window and creating and navigating files in bash.
+> Students should be familiar with opening the Terminal window and creating and navigating files in bash.  They should have basic familiarity with python scripting, equivalent to what would be learned in the [MolSSI Python Data and Scripting workshop](http://education.molssi.org/python_scripting_cms/).
 {: .prereq}
 
 {% include links.md %}
