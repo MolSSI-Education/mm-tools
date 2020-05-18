@@ -21,13 +21,13 @@ In this lesson we will carry out an MD simulation of the protein bovine pancreat
 
 ## Starting structure and simulation preliminaries
 
-The X-ray crystal structures (and NMR-derived structures) of many folded proteins can be found at the [Protein Data Bank](​http://www.rcsb.org​). Every structure deposited in the PDB has a four character code; for this exercise we will use the structure 4PTI. This structure was deposited in 1982 (!), but has excellent resolution (1.5 Å) and provides a good starting point for our simulation.
+The X-ray crystal structures (and NMR-derived structures) of many folded proteins can be found at the [Protein Data Bank](http://www.rcsb.org). Every structure deposited in the PDB has a four character code; for this exercise we will use the structure 4PTI. This structure was deposited in 1982 (!), but has excellent resolution (1.5 Å) and provides a good starting point for our simulation.
 
-Taking a structure from the PDB and getting it ready for simulation is not a trivial task. For us to carry out a gas phase simulation of this protein, crystallographic waters must be removed and disulfide bonds between various cysteine residues must be specified. Thankfully there are applications that help to automate this task. In this particular case, the application pdb4amber​ (part of the [AmberTools distribution](​http://www.ambermd.org​) was used to generate an appropriate [pdb file](../data/bpti_gas.pdb). Then another AmberTools application, ​tleap​, was used to create a [parameter/topology file](../data/​bpti_gas.prmtop​) and a [starting coordinate](​../data/bpti_gas.inpcrd​) files that can be understood by Amber or OpenMM.  If you want to learn more about how to use these tools, see the yellow box below, but you can also just download all three of these files from the [data folder](../data). For this exercise, we will be using the Amber ff14SB protein force field.
+Taking a structure from the PDB and getting it ready for simulation is not a trivial task. For us to carry out a gas phase simulation of this protein, crystallographic waters must be removed and disulfide bonds between various cysteine residues must be specified. Thankfully there are applications that help to automate this task. In this particular case, the application pdb4amber (part of the [AmberTools distribution](http://www.ambermd.org) was used to generate an appropriate [pdb file](../data/bpti_gas.pdb). Then another AmberTools application, tleap, was used to create a [parameter/topology file](../data/bpti_gas.prmtop) and a [starting coordinate](../data/bpti_gas.inpcrd) files that can be understood by Amber or OpenMM.  If you want to learn more about how to use these tools, see the yellow box below, but you can also just download all three of these files from the [data folder](../data). For this exercise, we will be using the Amber ff14SB protein force field.
 
 > ## Getting the PDB file ready for the simulation
 > To prepare the initial parameter/topology file and the input coordinate file, you will need AmberTools18 installed on your computer.  
-> - Download the file ​4PTI.pdb​ from the PDB website into the directory of your choice.
+> - Download the file 4PTI.pdb from the PDB website into the directory of your choice.
 > - In a terminal window, change to that directory and type the following command:
 >
 > ~~~
@@ -35,7 +35,7 @@ Taking a structure from the PDB and getting it ready for simulation is not a tri
 > ~~~
 > {: .language-bash}
 >
-> - Create a text file ​`setup_BPTI.leap​` with the following content:
+> - Create a text file `setup_BPTI.leap` with the following content:
 >
 > ~~~
 > source leaprc.protein.ff14SB
