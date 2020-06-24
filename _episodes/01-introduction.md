@@ -61,7 +61,7 @@ We are going to perform simulations of molecules using the software [OpenMM](htt
   <script>
       document.addEventListener("DOMContentLoaded", function () {
         var stage = new NGL.Stage("ethane-viewport", {backgroundColor: "white"} );
-        stage.loadFile("http://education.molssi.org/mm-tools/data/ethane.pdb", {defaultRepresentation: true});
+        stage.loadFile("https://education.molssi.org/mm-tools/data/ethane.pdb", {defaultRepresentation: true});
       });
     </script>
   <div id="ethane-viewport" style="width:400px; height:300px;"></div>
@@ -205,7 +205,7 @@ The last line tells OpenMM we are done telling it about the ForceField. We have 
 >  <script>
 >      document.addEventListener("DOMContentLoaded", function () {
 >        var stage = new NGL.Stage("butane-viewport", {backgroundColor: '#fcf6ea'} );
->        stage.loadFile("http://education.molssi.org/mm-tools/data/butane.pdb", {defaultRepresentation: true});
+>        stage.loadFile("https://education.molssi.org/mm-tools/data/butane.pdb", {defaultRepresentation: true});
 >      });
 >    </script>
 >  <div id="butane-viewport" style="width:400px; height:300px;"></div>
