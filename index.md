@@ -3,10 +3,7 @@ layout: lesson
 root: .  # Is the only page that doesn't follow the pattern /:path/index.html
 permalink: index.html  # Is the only page that doesn't follow the pattern /:path/index.html
 ---
-This is a lesson template for the [Molecular Sciences Software Institute]({{ site.molssi_site }})(MolSSI). It is based on a lesson template from [Software Carpentry](https://www.software-carpentry.org)
-
- To see the full MolSSI's education mission statement, please see
-[here](http://molssi.org/education/education-mission-statement/).
+The mm-tools workshop introduces molecular dynamics simulations using the software OpenMM, and analysis of simulation results using MDTraj. The theoretical background of MD simulations are discussed, and students simulate and analyze alkane and a simple protein system. This workshop also covers putting code on GitHub and includes an exercise where students implement a new software feature and submit a pull request.
 
 > ## Prerequisites
 >
