@@ -28,15 +28,10 @@ conda install -c omnia openmm
 3. Move the downloaded materials to the new folder.
 4. Unzip the file.  
 
-## Open the Terminal Window
-- Windows:  Click Windows Key + R, type cmd, press Enter.
-- MacOS: The Terminal application can be found in Applications -> Utilities -> Terminal.
 
 ## Start a Jupyter notebook
-In the Terminal window, type
-```
-$ jupyter notebook
-```
+Open the Anaconda Navigator, and find the Jupyter notebook button. Click Launch.
+
 It may take a few seconds to load the page, especially if it is the first time you have ever used the jupyter notebook, so don't panic if nothing loads for a few seconds.  Then a new window should open in your default internet browser. Use the file navigation window to navigate to the `mm-tools` folder.  In the upper right hand corner, click New, then choose Python 3 from the dropdown list.  You're ready to go!
 
 
