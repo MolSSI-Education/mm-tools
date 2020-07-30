@@ -29,7 +29,7 @@ $$ \vec{F} = - \nabla U $$
 
 $$ \vec{F} = m \cdot \vec{a} = m \cdot \frac{d\vec{v}}{dt} = m \cdot \frac{d^{2}\vec{r}}{dt^{2}}$$
 
-Looking at these two equations, we se that we we already know the mass for each atom. With our force field defined, we can calculate the force on each atom. The net orce on each atom is the sum of forces from all other atoms in the system:
+Looking at these two equations, we se that we we already know the mass for each atom. With our force field defined, we can calculate the force on each atom. The net force on each atom is the sum of forces from all other atoms in the system:
 
 $$ \vec{F}_i = \sum_{j=1}^{n_{max}}{f_{j}}, (j \neq i) $$
 
