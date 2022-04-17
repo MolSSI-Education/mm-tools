@@ -296,8 +296,7 @@ First, we will need to make sure we have a few more Python libraries installed w
 Type the following in your terminal to install nglview and MDTraj:
 
 ~~~
-$ pip install nglview
-$ conda install -c conda-forge mdtraj
+$ conda install -c conda-forge mdtraj nglview
 ~~~
 {: .language-bash}
 
