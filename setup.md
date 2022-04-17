@@ -10,7 +10,7 @@ title: Setup
 
 ## Installing a Text Editor
 
-You will need a text editor for this workshop. If you do not have a preferred text editor for writing code, we recommend [Atom](https://atom.io). Download Atom at the link and install on your computer.
+You will need a text editor for this workshop. If you do not have a preferred text editor for writing code, we recommend [Visual Studio Code](https://code.visualstudio.com/). Download Visual Studio Code at the link and install on your computer.
 
 ## Installing OpenMM (computational chemistry software)
 We recommend using a conda environment for software installations. If you know how to use a conda environment, you should create one for this tutorial and install OpenMM there. If you do not know how to create an environment, do not create one and just follow the instructions below. 
@@ -18,7 +18,7 @@ We recommend using a conda environment for software installations. If you know h
 After you have Anaconda installed, you can install the software using `conda`. Open a Terminal if you are on Mac or Linux. If you are on Windows, you should open a program called Anaconda Prompt. Type the following command into the terminal/anaconda prompt and press Enter. When prompted, answer 'yes' and wait for the install to finish:
 
 ~~~
-conda install -c omnia openmm
+conda install -c conda-forge openmm
 ~~~
 {: .language-bash}
 
@@ -33,8 +33,6 @@ conda install -c omnia openmm
 Open the Anaconda Navigator, and find the Jupyter notebook button. Click Launch.
 
 It may take a few seconds to load the page, especially if it is the first time you have ever used the jupyter notebook, so don't panic if nothing loads for a few seconds.  Then a new window should open in your default internet browser. Use the file navigation window to navigate to the `mm-tools` folder.  In the upper right hand corner, click New, then choose Python 3 from the dropdown list.  You're ready to go!
-
-
 
 
 {% include links.md %}
