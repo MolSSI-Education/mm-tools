@@ -1,0 +1,14 @@
+name: mm-tools
+
+channels:
+  - conda-forge
+  - defaults
+
+dependencies:
+  - openmm
+  - "ipywidgets<8"
+  - notebook
+  - matplotlib
+  - nglview
+  - mdtraj
+  - statsmodels

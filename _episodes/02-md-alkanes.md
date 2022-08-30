@@ -56,15 +56,7 @@ Usually a simulation protocol follow this general procedure:
 
 ## Running your first simulations
 
-We will now use OpenMM to do a molecular dynamics simulation of the ethane and butane molecules we prepared in the previous lesson. It's important to note at this point that molecular dynamics simulations can be performed using a number of softwares. However, we will be running a simulation with a program called OpenMM. OpenMM has the advantage of being scriptable with Python.
-
-We will first have to make sure we have OpenMM installed. If you are using anaconda, install OpenMM by typing the following command into your terminal or the Anaconda prompt:
-
-~~~
-$ conda install -c omnia openmm
-~~~
-{: .language-bash}
-
+We will now use OpenMM to do a molecular dynamics simulation of the ethane and butane molecules we prepared in the previous lesson. It's important to note at this point that molecular dynamics simulations can be performed using a number of softwares. However, we will be running a simulation with a program called OpenMM. OpenMM has the advantage of being scriptable with Python. You should have installed OpenMM during the workshop set up.
 
 ### Simulation Initialization
 
@@ -73,17 +65,16 @@ Once you have OpenMM, we can use it to simulate our molecules. Open a jupyter no
 Start in your notebook with imports. Here are the python libraries you will need to run simulations with OpenMM.
 
 ~~~
-from simtk.openmm import app
-import simtk.openmm as mm
-from simtk import unit
+import openmm as mm
+from openmm import app, unit
 ~~~
 {: .language-python}
 
 First, we need to read in our structure and our force field. We have to tell the simulation our initial coordinates and the force field we will use. To do this, we use the PDB file we have and the force field file we prepared in the first lesson.
 
 ~~~
-pdb = app.PDBFile('ethane.pdb')
-forcefield = app.ForceField('ethane.gaff2.xml')
+pdb = app.PDBFile('data/ethane.pdb')
+forcefield = app.ForceField('data/ethane.gaff2.xml')
 ~~~
 {: .language-python}
 
@@ -307,7 +298,7 @@ First, we will load in our trajectory using MDTraj
 ~~~
 import mdtraj as md
 
-traj = md.load('ethane_sim.dcd', top='ethane.pdb')
+traj = md.load('ethane_sim.dcd', top='data/ethane.pdb')
 ~~~
 {: .language-python}
 
@@ -477,7 +468,7 @@ plt.show()
 >> ~~~
 >> import matplotlib.pyplot as plt
 >> 
->> phicounts, binedges, otherstuff = plt.hist(phi, bins=90) # create a histogram with 90 bins
+>> phicounts, phi_binedges, otherstuff = plt.hist(phi, bins=90) # create a histogram with 90 bins
 >> plt.title('H-C-C-H torsion angle')
 >> plt.xlabel(r'$\phi$ (rad)')
 >> plt.ylabel('Counts')
@@ -500,15 +491,17 @@ where $$p(x)$$ is the probability, or the histogram we calculated previously.
 For our torsion angle, we can calculate and plot the PMF:
 
 ~~~
+import numpy as np
+
 kB = 8.31446/1000 # Boltzmann constant in kJ/mol
 Temp = 298.15 # simulation temperature
 phicounts[phicounts==0] = 0.1 # get rid of any bins with 0 counts/infinite energy
 pmf = -kB*Temp*np.log(phicounts) # W(x) = -kT*ln[p(x)] = -kT*ln[n(x)] + C
 pmf = pmf - np.min(pmf) # subtract off minimum value so that energies start from 0
 
-bincenters = (binedges[1:] + binedges[:-1])/2 # compute centers of histogram bins
+phi_bincenters = (phi_binedges[1:] + phi_binedges[:-1])/2 # compute centers of histogram bins
 
-plt.plot(bincenters, pmf)
+plt.plot(phi_bincenters, pmf)
 plt.title('H-C-C-H torsion pmf')
 plt.xlabel(r'$\phi$ (rad)')
 plt.ylabel('Relative free energy (kJ/mol)')
