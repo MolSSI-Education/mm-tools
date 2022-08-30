@@ -6,6 +6,7 @@ channels:
 
 dependencies:
   - openmm
+  - "ipywidgets<8"
   - notebook
   - matplotlib
   - nglview
