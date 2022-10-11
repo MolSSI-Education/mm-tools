@@ -2,6 +2,20 @@
 title: Setup
 ---
 
+You can either install software on your computer, or you can use a website called [ChemCompute](https://chemcompute.org/) which will allow you to access computing resources and a pre-configured environment for this workshop without installing any software on your own computer. 
+ChemCompute is only accessible to users with an academic email address. **Warning** If you are an academic user outside of the United States, there is a chance your email won't be properly recognized. If this happens, you may have to install software on your personal computer.
+
+## Using a cloud computing environment
+
+You can access a cloud computing environment with computational chemistry software installed by using [ChemCompute](https://chemcompute.org/).
+
+1. [Register](https://chemcompute.org/register/) for a ChemCompute account. The easiest thing to do is to choose "Sign in with your University Login" on the right. You can login using your university email. You will need to confirm account registration from an email chemcompute will send you.
+2. After confirming your account, you will be able to access a Jupyter notebook. The first time you start this workshop, you will need to get access to the files used in this workshop. Using the menu at the top, select "Jupyter" then "Clone a github repo to your notebook"
+3. There will be a form on the page. Enter https://github.com/MolSSI-Education/mm-tools-binder into the URL field and click "Pull Repo"
+4. A Jupyter notebook environment with the files you need will start for you.
+
+You only have to complete these steps once. Every other time you access ChemCompute, you will click "Jupyter" then "Use Psi4 or JupyterHub". Your files for this workshop will be in a folder called `mm-tools-binder`.
+
 ## Using your personal computer
 
 ### Installing Python through Anaconda
