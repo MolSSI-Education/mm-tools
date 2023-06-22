@@ -58,7 +58,7 @@ Taking a structure from the PDB and getting it ready for simulation is not a tri
 {: .callout}
 
 ## MD simulation protocol
-Before you begin, make sure the pdb file, parameter/topology file, and the starting coordinate file are in the same directory as your jupyter notebook where you plan to run the simulation.
+Before you begin, make sure you have access to the pdb file, parameter/topology file, and the starting coordinate file from your jupyter notebook where you plan to run the simulation.
 
 We will carry out a simulation protocol very similar to that of McCammon et al. (as well as our earlier exercises), with ​some​ modernized aspects to it:
 1. Up to 100 steps of energy minimization using the L-BFGS algorithm. [In the original study the authors performed 100 steps of MD with initial velocities set to zero/a starting temperature of 0 K.]
@@ -78,7 +78,7 @@ import time as time
 {: .language-python}
 
 ### Simulation setup up
-Specify the parameter/topology file and the initial coordinate file.  Again, make sure the files you downloaded are in the same directory as the jupyter notebook where you are running the simulation.  
+Specify the parameter/topology file and the initial coordinate file.  In this example the parameter/topology and starting coordinate files are in the same directory as the jupyter notebook where you are running the simulation.  
 
 ~~~
 prmtop = app.AmberPrmtopFile('BPTI_gas.prmtop')
