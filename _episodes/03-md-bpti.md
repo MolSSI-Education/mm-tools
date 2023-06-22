@@ -69,11 +69,12 @@ We will carry out a simulation protocol very similar to that of McCammon et al. 
 First, import the required python as you did in the previous lesson.
 
 ~~~
-from simtk.openmm import app
-import simtk.openmm as mm
+from openmm import app
+import openmm as mm
 from simtk import unit
 from sys import stdout
 import time as time
+import os 
 ~~~
 {: .language-python}
 
