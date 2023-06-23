@@ -214,9 +214,10 @@ Your overall goal in the exercise below is to reproduce – in a rough way – F
 > ~~~
 > {: .language-python}
 >
-> You can view your trajectory with nglview. Use your cursor to rotate and zoom.
+> Load in your trajectory and view it using nglview. Use your cursor to rotate and zoom.
 >
 > ~~~
+> traj = md.load('BPTI_sim.dcd', top='BPTI_gas.prmtop')
 > visualize = ngl.show_mdtraj(traj)
 > visualize
 > ~~~
@@ -225,7 +226,7 @@ Your overall goal in the exercise below is to reproduce – in a rough way – F
 > Next use this code to identify all of the atoms that will be involved in the bond length, angle, and torsions we want to analyze.
 >
 > ~~~
-> traj = md.load('BPTI_sim.dcd', top='BPTI_gas.prmtop')
+> 
 > atoms, bonds = traj.topology.to_dataframe()
 > atoms[:10] # there are many more!
 >
