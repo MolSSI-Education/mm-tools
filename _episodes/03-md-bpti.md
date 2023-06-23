@@ -262,7 +262,7 @@ Your overall goal in the exercise below is to reproduce – in a rough way – F
 > Write code to complete the analysis:
 > 1. Convert the N-H bond length from nm to Å and then plot the bond length vs. time over the same time interval as the N-Cα bond. How do the dynamics of this bond differ from those of the N-Cα bond? [Just by eyeballing the range of N-H bond lengths in this plot, the distribution of the N-H bond length should look ​very​ different from the C-H bond lengths in the butane simulation. What’s different about this simulation?]
 > 2. Convert the N-Cα-C bond angle from radians to degrees and then plot the bond angle vs. time over the same time interval.
-> 3. Convert the φ, ψ, and ω torsions from radians to degrees and then plot > them vs. time for 2.0 ps, also beginning with step 5000. You might notice that the ω torsion plot looks suboptimal because this torsion angle oscillates around ±180°. How might we fix it to look more human-readable?
+> 3. Convert the φ, ψ, and ω torsions from radians to degrees and then plot them vs. time for 2.0 ps, also beginning with step 5000. You might notice that the ω torsion plot looks suboptimal because this torsion angle oscillates around ±180°. How might we fix it to look more human-readable?
 >
 >> ## Solution
 >>
