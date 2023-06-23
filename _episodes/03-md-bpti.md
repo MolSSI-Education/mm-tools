@@ -214,6 +214,14 @@ Your overall goal in the exercise below is to reproduce – in a rough way – F
 > ~~~
 > {: .language-python}
 >
+> You can view your trajectory with nglview. Use your cursor to rotate and zoom.
+>
+> ~~~
+> visualize = ngl.show_mdtraj(traj)
+> visualize
+> ~~~
+> {: .language-python}
+> 
 > Next use this code to identify all of the atoms that will be involved in the bond length, angle, and torsions we want to analyze.
 >
 > ~~~
