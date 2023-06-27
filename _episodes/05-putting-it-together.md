@@ -161,12 +161,16 @@ Before the Simulation object is created, add the force to the system, using a li
 >> ### of the existing forces, you should do it here - after the
 >> ### System has been created, but before the Simulation is created.
 >>
->> frc = mm.CustomBondForce("0.5*k*(r-r0)^2")
->> frc.addGlobalParameter("k", 1000)
->> frc.addGlobalParameter("r0", 2)
->>
->> frc.addBond(56, 200)
->> system.addForce(frc)
+>> def AddSpringForce(a1, a2, k, r0):
+>>     newForce = mm.CustomBondForce("0.5*k*(r-r0)^2")
+>>     newForce.addGlobalParameter("k", k)
+>>     newForce.addGlobalParameter("r0", r0)
+>>     newForce.addBond(a1, a2)
+>>     system.addForce(newForce)
+>>     print('New spring force added between atoms', a1, 'and', a2)
+>>     print('Force constant:', k, ', equilibrium distance:', r0)
+>> 
+>> AddSpringForce(1, 273, 100, 2.0)
 >>
 >> # Create a Simulation object by putting together the objects above
 >> simulation = app.Simulation(pdb.topology, system, integrator, platform)
