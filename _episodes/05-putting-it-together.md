@@ -112,7 +112,7 @@ Before the Simulation object is created, add the force to the system, using a li
 > the same as the syntax that was used for adding the Monte Carlo Barostat.
 >
 > #### 5. Turn all the previous code into one function
-> In your Python script, incorporate the above code into a function ​called AddSpringForce(a1, a2, k)​ so that you may add a spring force between any two atoms with any provided spring constant k.  Write a docstring to document your function. Add a line to your script that calls the function.
+> In your Python script, incorporate the above code into a function ​called AddSpringForce(a1, a2, k, r0)​ so that you may add a spring force between any two atoms with any provided spring constant k and equilibrium distance r0.  Write a docstring to document your function. Add a line to your script that calls the function.
 > (Note​: As you become more experienced, you can always define the function first and then start add code to it, rather than writing the code first and then putting it into a function.)
 >
 > #### 6. Make sure your new script runs
