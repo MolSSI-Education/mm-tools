@@ -271,15 +271,28 @@ Using the API documentation, look up the method in NonbondedForce for getting an
 >> ### of the existing forces, you should do it here - after the
 >> ### System has been created, but before the Simulation is created.
 >>
->> atoms = list(pdb.topology.atoms())
->>
->> for f in system.getForces():
->>     if isinstance(f, mm.NonbondedForce):
->>         print("Found nonbonded force")
->>         for i in range(f.getNumParticles()):
->>             if atoms[i].residue.name != 'HOH':
->>                 chg, sig, eps = f.getParticleParameters(i)
->>                 f.setParticleParameters(i, 0.0, sig, eps)
+>> def ZeroPointCharges():
+>>     
+>>     # list of all the atoms in the system
+>>     atoms = list(pdb.topology.atoms())
+>>     # the list of all the forces in the system
+>>     force_list = system.getForces()
+>>     # iterate over all the forces in the system
+>>     for f in force_list:
+>>         # if statement for NonbondedForce
+>>         if isinstance(f, mm.NonbondedForce):
+>>             print("Found nonbonded force")
+>>             # iterate over atoms in the protein
+>>             for i in range(len(atoms)):
+>>                 # only modify the charge on protein atoms, not water
+>>                 if atoms[i].residue.name != 'HOH':
+>>                     # get nonbonded parameters for each atom
+>>                     charge, sigma, epsilon = f.getParticleParameters(i)
+>>                     # set charge to zero (and keep other parameters) for each atom
+>>                     f.setParticleParameters(i, 0.0, sigma, epsilon)
+>>                 
+>> # call the function
+>> ZeroPointCharges()
 >>
 >> # Create a Simulation object by putting together the objects above
 >> simulation = app.Simulation(pdb.topology, system, integrator, platform)
