@@ -70,7 +70,7 @@ The cool thing about OpenMM is that your simulation is inside of the Python scri
 > ~~~
 > {: .language-python}
 >
-> There’s a variety of documentation you can use to implement the spring force between these particles. The class you need is called ​CustomBondForce.​ This class allows you to implement any force between selected pairs of atoms, it doesn’t have to represent a covalent bond. To learn about how to use this class, ​visit the Python API (application programing interface) documentation​ located at ​http://docs.openmm.org/latest/api-python/index.html​, ​click on Forces, and then CustomBondForce​.
+> There’s a variety of documentation you can use to implement the spring force between these particles. The class you need is called ​CustomBondForce.​ This class allows you to implement any force between selected pairs of atoms, it doesn’t have to represent a covalent bond. To learn about how to use this class, ​visit the Python API (application programing interface) documentation​ located at ​http://docs.openmm.org/latest/api-python/, ​click on Forces, and then CustomBondForce​.
 >
 > Write the following code after the system object is created, but before the simulation object.
 >
@@ -80,7 +80,7 @@ The cool thing about OpenMM is that your simulation is inside of the Python scri
 > custom_bond = mm.CustomBondForce(“...”)​
 > ~~~
 > {: .language-python}
-> where ... is the energy expression that you want to use for the particles.  For you initial expression use a harmonic spring force where the energy expression is ​
+> where ... is the energy expression that you want to use for the particles.  For your initial expression use a harmonic spring force where the energy expression is ​
 > ~~~
 > 0.5*k*(r-r0)^2​
 > ~~~
