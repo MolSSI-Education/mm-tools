@@ -215,7 +215,7 @@ Before the Simulation object is created, add the force to the system, using a li
 > Create a function called ZeroProteinCharges()​, so that you zero out the protein charges by calling this function. Make sure this function is defined after the system object has been created, but before the Simulation is created. Write the rest of the code into this function.
 >
 > #### 2. Find the NonbondedForce object and change things
-> The System contains a number of Force objects of different kinds (HarmonicBondForcels, HarmonicAngleForce, NonbondedForce etc.) We want to change some parameters in the NonbondedForce. To do this, ​we will iterate over the list of Forces in the System​ and see which object is an instance of the NonbondedForce class.
+> The System contains a number of Force objects of different kinds (HarmonicBondForce, HarmonicAngleForce, NonbondedForce etc.) We want to change some parameters in the NonbondedForce. To do this, ​we will iterate over the list of Forces in the System​ and see which object is an instance of the NonbondedForce class.
 >
 > The method that iterates over the Forces is described in the API documentation. Start from the API documentation: ​http://docs.openmm.org/latest/api-python/index.html​, click on “Core Objects”, go to System, and look through the methods for the right one.
 >
