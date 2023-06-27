@@ -232,7 +232,7 @@ Inside the if statement, you are now ready to iterate over the particles and set
 Using the API documentation, look up the method in NonbondedForce for getting and setting the nonbonded parameters for particles.
 >
 > #### 5. Set the charges to zero
-> e. We wish to set the charge parameters for the atoms in the protein to zero. Inside your for loop over protein atoms, first ​get the charge, sigma, and epsilon parameters for the atom (make sure to set three return values), and then set the parameters for that atom to 0 (zero), sigma, and epsilon respectively​.
+> We wish to set the charge parameters for the atoms in the protein to zero. Inside your for loop over protein atoms, first ​get the charge, sigma, and epsilon parameters for the atom (make sure to set three return values), and then set the parameters for that atom to 0 (zero), sigma, and epsilon respectively​.
 >
 > #### 6. Visualize your results
 > Visualize the trajectory and analyze some interatomic distances to see if/how zeroing out the atomic charges affects the protein conformation. ​[One handy reaction coordinate for protein folding – at least in globular proteins – is radius of gyration. See if you can find the relevant MDTraj function for computing this quantity.]
