@@ -127,9 +127,8 @@ Before the Simulation object is created, add the force to the system, using a li
 >> ## Solution
 >> Here is a completed code example for this exercise.
 >> ~~~
->> from __future__ import print_function
->> from simtk.openmm import app
->> import simtk.openmm as mm
+>> from openmm import app
+>> import openmm as mm
 >> from simtk import unit
 >> from sys import stdout
 >>
@@ -240,9 +239,8 @@ Using the API documentation, look up the method in NonbondedForce for getting an
 >> ## Solution
 >> Here is a completed code example for this exercise.
 >> ~~~
->> from __future__ import print_function
->> from simtk.openmm import app
->> import simtk.openmm as mm
+>> from openmm import app
+>> import openmm as mm
 >> from simtk import unit
 >> from sys import stdout
 >>
