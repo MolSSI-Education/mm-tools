@@ -217,7 +217,7 @@ Before the Simulation object is created, add the force to the system, using a li
 > #### 2. Find the NonbondedForce object and change things
 > The System contains a number of Force objects of different kinds (HarmonicBondForce, HarmonicAngleForce, NonbondedForce etc.) We want to change some parameters in the NonbondedForce. To do this, ​we will iterate over the list of Forces in the System​ and see which object is an instance of the NonbondedForce class.
 >
-> The method that iterates over the Forces is described in the API documentation. Start from the API documentation: ​http://docs.openmm.org/latest/api-python/index.html​, click on “Core Objects”, go to System, and look through the methods for the right one.
+> The method that iterates over the Forces is described in the API documentation. Start from the API documentation: ​http://docs.openmm.org/latest/api-python/, click on “Core Objects”, go to System, and look through the methods for the right one.
 >
 > After identifying the correct method, call it in your function​ to obtain the list of forces, and then write a Python loop to iterate over the items in this list. Inside the loop, check if the Force object is an instance of the NonbondedForce class using the syntax:
 > ~~~
