@@ -58,7 +58,7 @@ Taking a structure from the PDB and getting it ready for simulation is not a tri
 {: .callout}
 
 ## MD simulation protocol
-Before you begin, make sure the pdb file, parameter/topology file, and the starting coordinate file are in the same directory as your jupyter notebook where you plan to run the simulation.
+Before you begin, make sure you have access to the pdb file, parameter/topology file, and the starting coordinate file from your jupyter notebook where you plan to run the simulation.
 
 We will carry out a simulation protocol very similar to that of McCammon et al. (as well as our earlier exercises), with ​some​ modernized aspects to it:
 1. Up to 100 steps of energy minimization using the L-BFGS algorithm. [In the original study the authors performed 100 steps of MD with initial velocities set to zero/a starting temperature of 0 K.]
@@ -69,16 +69,17 @@ We will carry out a simulation protocol very similar to that of McCammon et al. 
 First, import the required python as you did in the previous lesson.
 
 ~~~
-from simtk.openmm import app
-import simtk.openmm as mm
+from openmm import app
+import openmm as mm
 from simtk import unit
 from sys import stdout
 import time as time
+import os 
 ~~~
 {: .language-python}
 
 ### Simulation setup up
-Specify the parameter/topology file and the initial coordinate file.  Again, make sure the files you downloaded are in the same directory as the jupyter notebook where you are running the simulation.  
+Specify the parameter/topology file and the initial coordinate file.  In this example the parameter/topology and starting coordinate files are in the same directory as the jupyter notebook where you are running the simulation.  
 
 ~~~
 prmtop = app.AmberPrmtopFile('BPTI_gas.prmtop')
@@ -213,10 +214,19 @@ Your overall goal in the exercise below is to reproduce – in a rough way – F
 > ~~~
 > {: .language-python}
 >
-> Next use this code to identify all of the atoms that will be involved in the bond length, angle, and torsions we want to analyze.
+> Load in your trajectory and view it using nglview. Use your cursor to rotate and zoom.
 >
 > ~~~
 > traj = md.load('BPTI_sim.dcd', top='BPTI_gas.prmtop')
+> visualize = ngl.show_mdtraj(traj)
+> visualize
+> ~~~
+> {: .language-python}
+> 
+> Next use this code to identify all of the atoms that will be involved in the bond length, angle, and torsions we want to analyze.
+>
+> ~~~
+> 
 > atoms, bonds = traj.topology.to_dataframe()
 > atoms[:10] # there are many more!
 >
@@ -252,7 +262,7 @@ Your overall goal in the exercise below is to reproduce – in a rough way – F
 > Write code to complete the analysis:
 > 1. Convert the N-H bond length from nm to Å and then plot the bond length vs. time over the same time interval as the N-Cα bond. How do the dynamics of this bond differ from those of the N-Cα bond? [Just by eyeballing the range of N-H bond lengths in this plot, the distribution of the N-H bond length should look ​very​ different from the C-H bond lengths in the butane simulation. What’s different about this simulation?]
 > 2. Convert the N-Cα-C bond angle from radians to degrees and then plot the bond angle vs. time over the same time interval.
-> 3. Convert the φ, ψ, and ω torsions from radians to degrees and then plot > them vs. time for 2.0 ps, also beginning with step 5000. You might notice that the ω torsion plot looks suboptimal because this torsion angle oscillates around ±180°. How might we fix it to look more human-readable?
+> 3. Convert the φ, ψ, and ω torsions from radians to degrees and then plot them vs. time for 2.0 ps, also beginning with step 5000. You might notice that the ω torsion plot looks suboptimal because this torsion angle oscillates around ±180°. How might we fix it to look more human-readable?
 >
 >> ## Solution
 >>

@@ -70,7 +70,7 @@ The cool thing about OpenMM is that your simulation is inside of the Python scri
 > ~~~
 > {: .language-python}
 >
-> There’s a variety of documentation you can use to implement the spring force between these particles. The class you need is called ​CustomBondForce.​ This class allows you to implement any force between selected pairs of atoms, it doesn’t have to represent a covalent bond. To learn about how to use this class, ​visit the Python API (application programing interface) documentation​ located at ​http://docs.openmm.org/latest/api-python/index.html​, ​click on Forces, and then CustomBondForce​.
+> There’s a variety of documentation you can use to implement the spring force between these particles. The class you need is called ​CustomBondForce.​ This class allows you to implement any force between selected pairs of atoms, it doesn’t have to represent a covalent bond. To learn about how to use this class, ​visit the Python API (application programing interface) documentation​ located at ​http://docs.openmm.org/latest/api-python/, ​click on Forces, and then CustomBondForce​.
 >
 > Write the following code after the system object is created, but before the simulation object.
 >
@@ -80,7 +80,7 @@ The cool thing about OpenMM is that your simulation is inside of the Python scri
 > custom_bond = mm.CustomBondForce(“...”)​
 > ~~~
 > {: .language-python}
-> where ... is the energy expression that you want to use for the particles.  For you initial expression use a harmonic spring force where the energy expression is ​
+> where ... is the energy expression that you want to use for the particles.  For your initial expression use a harmonic spring force where the energy expression is ​
 > ~~~
 > 0.5*k*(r-r0)^2​
 > ~~~
@@ -112,7 +112,7 @@ Before the Simulation object is created, add the force to the system, using a li
 > the same as the syntax that was used for adding the Monte Carlo Barostat.
 >
 > #### 5. Turn all the previous code into one function
-> In your Python script, incorporate the above code into a function ​called AddSpringForce(a1, a2, k)​ so that you may add a spring force between any two atoms with any provided spring constant k.  Write a docstring to document your function. Add a line to your script that calls the function.
+> In your Python script, incorporate the above code into a function ​called AddSpringForce(a1, a2, k, r0)​ so that you may add a spring force between any two atoms with any provided spring constant k and equilibrium distance r0.  Write a docstring to document your function. Add a line to your script that calls the function.
 > (Note​: As you become more experienced, you can always define the function first and then start add code to it, rather than writing the code first and then putting it into a function.)
 >
 > #### 6. Make sure your new script runs
@@ -127,9 +127,8 @@ Before the Simulation object is created, add the force to the system, using a li
 >> ## Solution
 >> Here is a completed code example for this exercise.
 >> ~~~
->> from __future__ import print_function
->> from simtk.openmm import app
->> import simtk.openmm as mm
+>> from openmm import app
+>> import openmm as mm
 >> from simtk import unit
 >> from sys import stdout
 >>
@@ -161,12 +160,16 @@ Before the Simulation object is created, add the force to the system, using a li
 >> ### of the existing forces, you should do it here - after the
 >> ### System has been created, but before the Simulation is created.
 >>
->> frc = mm.CustomBondForce("0.5*k*(r-r0)^2")
->> frc.addGlobalParameter("k", 1000)
->> frc.addGlobalParameter("r0", 2)
->>
->> frc.addBond(56, 200)
->> system.addForce(frc)
+>> def AddSpringForce(a1, a2, k, r0):
+>>     newForce = mm.CustomBondForce("0.5*k*(r-r0)^2")
+>>     newForce.addGlobalParameter("k", k)
+>>     newForce.addGlobalParameter("r0", r0)
+>>     newForce.addBond(a1, a2)
+>>     system.addForce(newForce)
+>>     print('New spring force added between atoms', a1, 'and', a2)
+>>     print('Force constant:', k, ', equilibrium distance:', r0)
+>> 
+>> AddSpringForce(1, 273, 100, 2.0)
 >>
 >> # Create a Simulation object by putting together the objects above
 >> simulation = app.Simulation(pdb.topology, system, integrator, platform)
@@ -211,9 +214,9 @@ Before the Simulation object is created, add the force to the system, using a li
 > Create a function called ZeroProteinCharges()​, so that you zero out the protein charges by calling this function. Make sure this function is defined after the system object has been created, but before the Simulation is created. Write the rest of the code into this function.
 >
 > #### 2. Find the NonbondedForce object and change things
-> The System contains a number of Force objects of different kinds (HarmonicBondForcels, HarmonicAngleForce, NonbondedForce etc.) We want to change some parameters in the NonbondedForce. To do this, ​we will iterate over the list of Forces in the System​ and see which object is an instance of the NonbondedForce class.
+> The System contains a number of Force objects of different kinds (HarmonicBondForce, HarmonicAngleForce, NonbondedForce etc.) We want to change some parameters in the NonbondedForce. To do this, ​we will iterate over the list of Forces in the System​ and see which object is an instance of the NonbondedForce class.
 >
-> The method that iterates over the Forces is described in the API documentation. Start from the API documentation: ​http://docs.openmm.org/latest/api-python/index.html​, click on “Core Objects”, go to System, and look through the methods for the right one.
+> The method that iterates over the Forces is described in the API documentation. Start from the API documentation: ​http://docs.openmm.org/latest/api-python/, click on “Core Objects”, go to System, and look through the methods for the right one.
 >
 > After identifying the correct method, call it in your function​ to obtain the list of forces, and then write a Python loop to iterate over the items in this list. Inside the loop, check if the Force object is an instance of the NonbondedForce class using the syntax:
 > ~~~
@@ -228,7 +231,7 @@ Inside the if statement, you are now ready to iterate over the particles and set
 Using the API documentation, look up the method in NonbondedForce for getting and setting the nonbonded parameters for particles.
 >
 > #### 5. Set the charges to zero
-> e. We wish to set the charge parameters for the atoms in the protein to zero. Inside your for loop over protein atoms, first ​get the charge, sigma, and epsilon parameters for the atom (make sure to set three return values), and then set the parameters for that atom to 0 (zero), sigma, and epsilon respectively​.
+> We wish to set the charge parameters for the atoms in the protein to zero. Inside your for loop over protein atoms, first ​get the charge, sigma, and epsilon parameters for the atom (make sure to set three return values), and then set the parameters for that atom to 0 (zero), sigma, and epsilon respectively​.
 >
 > #### 6. Visualize your results
 > Visualize the trajectory and analyze some interatomic distances to see if/how zeroing out the atomic charges affects the protein conformation. ​[One handy reaction coordinate for protein folding – at least in globular proteins – is radius of gyration. See if you can find the relevant MDTraj function for computing this quantity.]
@@ -236,9 +239,8 @@ Using the API documentation, look up the method in NonbondedForce for getting an
 >> ## Solution
 >> Here is a completed code example for this exercise.
 >> ~~~
->> from __future__ import print_function
->> from simtk.openmm import app
->> import simtk.openmm as mm
+>> from openmm import app
+>> import openmm as mm
 >> from simtk import unit
 >> from sys import stdout
 >>
@@ -269,15 +271,28 @@ Using the API documentation, look up the method in NonbondedForce for getting an
 >> ### of the existing forces, you should do it here - after the
 >> ### System has been created, but before the Simulation is created.
 >>
->> atoms = list(pdb.topology.atoms())
->>
->> for f in system.getForces():
->>     if isinstance(f, mm.NonbondedForce):
->>         print("Found nonbonded force")
->>         for i in range(f.getNumParticles()):
->>             if atoms[i].residue.name != 'HOH':
->>                 chg, sig, eps = f.getParticleParameters(i)
->>                 f.setParticleParameters(i, 0.0, sig, eps)
+>> def ZeroPointCharges():
+>>     
+>>     # list of all the atoms in the system
+>>     atoms = list(pdb.topology.atoms())
+>>     # the list of all the forces in the system
+>>     force_list = system.getForces()
+>>     # iterate over all the forces in the system
+>>     for f in force_list:
+>>         # if statement for NonbondedForce
+>>         if isinstance(f, mm.NonbondedForce):
+>>             print("Found nonbonded force")
+>>             # iterate over atoms in the protein
+>>             for i in range(len(atoms)):
+>>                 # only modify the charge on protein atoms, not water
+>>                 if atoms[i].residue.name != 'HOH':
+>>                     # get nonbonded parameters for each atom
+>>                     charge, sigma, epsilon = f.getParticleParameters(i)
+>>                     # set charge to zero (and keep other parameters) for each atom
+>>                     f.setParticleParameters(i, 0.0, sigma, epsilon)
+>>                 
+>> # call the function
+>> ZeroPointCharges()
 >>
 >> # Create a Simulation object by putting together the objects above
 >> simulation = app.Simulation(pdb.topology, system, integrator, platform)
