@@ -31,28 +31,21 @@ You will need a text editor for this workshop. If you do not have a preferred te
 ## Installing Python Packages
 We recommend using a conda environment for software installations. 
 
-1.  <a href="https://education.molssi.org/mm-tools/files/conda-env.yaml" download>Download the conda environment file.</a> 
+1.  Download or clone the [`mm-tools-binder` repository](https://github.com/MolSSI-Education/mm-tools-binder).
 
 2. After you have Anaconda installed and have downloaded the file, you can install the software for this workshop using `conda`. Open a Terminal if you are on Mac or Linux. If you are on Windows, you should open a program called Anaconda Prompt. 
 
 Navigate to where you have downloaded the environm,ment file. Type the following command into the terminal/anaconda prompt and press Enter. When prompted, answer 'yes' and wait for the install to finish:
 
 ~~~
-conda env create -f conda-env.yaml
+conda env create -f environment.yml
 ~~~
 {: .bash}
 
-## Obtain lesson materials
-1. Download the lesson materials [here](./data/data.zip).
-2. Create a folder called `mm-tools` on your Desktop.
-3. Move the downloaded materials to the new folder.
-4. Unzip the file.  
-
-
 ## Start a Jupyter notebook
-Open the Anaconda Navigator, and choose your `mm-tooos` environment. After switching to your environment, find the Jupyter notebook button on your Home tab. Click Launch.
+Open the Anaconda Navigator, and choose your `mm-tools` environment. After switching to your environment, find the Jupyter notebook button on your Home tab. Click Launch.
 
-It may take a few seconds to load the page, especially if it is the first time you have ever used the jupyter notebook, so don't panic if nothing loads for a few seconds.  Then a new window should open in your default internet browser. Use the file navigation window to navigate to the `mm-tools` folder.  In the upper right hand corner, click New, then choose Python 3 from the dropdown list.  You're ready to go!
+It may take a few seconds to load the page, especially if it is the first time you have ever used the jupyter notebook, so don't panic if nothing loads for a few seconds.  Then a new window should open in your default internet browser. Use the file navigation window to navigate to your `mm-tools-binder` folder.  In the upper right hand corner, click New, then choose Python 3 from the dropdown list.  You're ready to go!
 
 
 {% include links.md %}
