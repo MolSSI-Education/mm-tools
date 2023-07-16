@@ -433,7 +433,7 @@ bond_length = md.compute_distances(traj, [bond_indices])
 ~~~
 {: .language-python}
 
-We now have the measurement for this torsion angle in radians for each recorded timestep of the trajectory saved in the array `bond_length`. One way we can examine this data is by plotting it as a histogram using the Python library `matplotlib`.
+We now have the measurement for this bond length in nanometers for each recorded timestep of the trajectory saved in the array `bond_length`. One way we can examine this data is by plotting it as a histogram using the Python library `matplotlib`.
 
 ~~~
 import matplotlib.pyplot as plt
