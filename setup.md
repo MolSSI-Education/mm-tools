@@ -11,10 +11,10 @@ You can access a cloud computing environment with computational chemistry softwa
 
 1. [Register](https://chemcompute.org/register/) for a ChemCompute account. The easiest thing to do is to choose "Sign in with your University Login" on the right. You can login using your university email. You will need to confirm account registration from an email chemcompute will send you.
 2. After confirming your account, you will be able to access a Jupyter notebook. The first time you start this workshop, you will need to get access to the files used in this workshop. Using the menu at the top, select "Jupyter" then "Clone a github repo to your notebook"
-3. There will be a form on the page. Enter https://github.com/MolSSI-Education/mm-tools-binder into the URL field and click "Pull Repo"
+3. There will be a form on the page. Enter https://github.com/MolSSI-Education/mm-tools-workshop into the URL field and click "Pull Repo"
 4. A Jupyter notebook environment with the files you need will start for you.
 
-You only have to complete these steps once. Every other time you access ChemCompute, you will click "Jupyter" then "Use Psi4 or JupyterHub". Your files for this workshop will be in a folder called `mm-tools-binder`.
+You only have to complete these steps once. Every other time you access ChemCompute, you will click "Jupyter" then "Use Psi4 or JupyterHub". Your files for this workshop will be in a folder called `mm-tools-workshop`.
 
 ## Using your personal computer
 
@@ -31,7 +31,7 @@ You will need a text editor for this workshop. If you do not have a preferred te
 ## Installing Python Packages
 We recommend using a conda environment for software installations. 
 
-1.  Download or clone the [`mm-tools-binder` repository](https://github.com/MolSSI-Education/mm-tools-binder).
+1.  Download or clone the [`mm-tools-workshop` repository](https://github.com/MolSSI-Education/mm-tools-workshop).
 
 2. After you have Anaconda installed and have downloaded the file, you can install the software for this workshop using `conda`. Open a Terminal if you are on Mac or Linux. If you are on Windows, you should open a program called Anaconda Prompt. 
 
@@ -45,7 +45,7 @@ conda env create -f environment.yml
 ## Start a Jupyter notebook
 Open the Anaconda Navigator, and choose your `mm-tools` environment. After switching to your environment, find the Jupyter notebook button on your Home tab. Click Launch.
 
-It may take a few seconds to load the page, especially if it is the first time you have ever used the jupyter notebook, so don't panic if nothing loads for a few seconds.  Then a new window should open in your default internet browser. Use the file navigation window to navigate to your `mm-tools-binder` folder.  In the upper right hand corner, click New, then choose Python 3 from the dropdown list.  You're ready to go!
+It may take a few seconds to load the page, especially if it is the first time you have ever used the jupyter notebook, so don't panic if nothing loads for a few seconds.  Then a new window should open in your default internet browser. Use the file navigation window to navigate to your `mm-tools-workshop` folder.  In the upper right hand corner, click New, then choose Python 3 from the dropdown list.  You're ready to go!
 
 
 {% include links.md %}
